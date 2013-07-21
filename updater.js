@@ -99,8 +99,8 @@ function updaterSource(query, meta) {
     "if (typeof GM_xmlhttpRequest !== 'undefined'" +
     (!isset(query['noinfo']) ?
     " &&\n" +
-    "    (typeof GM_info === 'object' || // has a built-in updater?\n" +
-    "     GM_info.scriptWillUpdate === false)" : "") + ")\n" +
+    "    (typeof GM_info === 'object' ? // has a built-in updater?\n" +
+    "     GM_info.scriptWillUpdate === false : true)" : "") + ")\n" +
     "    try {\n" +
     "        if (unsafeWindow.frameElement === null)\n" +
     "            AutoUpdater_" + varName + ".check();\n" +
@@ -111,12 +111,11 @@ function updaterSource(query, meta) {
 
 function parseMeta(metadataBlock) {
   var headers = {};
-  var line, name, prefix, header, key, value;
   var lines = metadataBlock.split(/\n/).filter(function(s) { 
-    return /\/\/ @/.test(s); });
+    return /^\/\/ @/.test(s); });
 
   lines.forEach(function(line) {
-    var matches =  line.match(/\/\/\s@(\S+)\s+(.+)\s*$/);
+    var matches =  line.match(/\/\/ @(\S+)(?:\s+(.+))?\s*$/);
     headers[matches[1]] = matches[2];
   });
 

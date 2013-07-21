@@ -1,24 +1,18 @@
 var http = require("http");
 var url = require("url");
 var updater = require("./updater");
+var sender = require('./sender');
 
 var isset = updater.isset;
 
-function updateServer(response, request) {
+function updateHandle(response, request) {
   var parsedUrl = url.parse(request.url, true);
   var pathname = parsedUrl.pathname;
   var query = parsedUrl.query;
 
-  function badGateway() {
-    response.writeHead(502, {"Content-Type": "text/javascript"});
-    response.write("// 502 - Bad Gateway");
-    response.end();
-  }
-
   if (request.headers['user-agent'].match(/AppleWebKit/i)) {
-    response.writeHead(200, {"Content-Type": "text/javascript"});
-    response.write("// This updater only supports Firefox");
-    response.end();
+    sender.sendResponse("// This updater only supports Firefox", 
+      "text/javascript", request, response);
     return;
   }
 
@@ -39,21 +33,20 @@ function updateServer(response, request) {
           
           res.on('end', function() {
             var meta = updater.parseMeta(new String(data));
-            response.writeHead(200, {"Content-Type": "text/javascript"});
-            response.write(updater.updaterSource(query, meta));
-            response.end();
+            var source = updater.updaterSource(query, meta);
+            sender.sendResponse(source, 'text/javascript', request, response);
           });
         }
        }).on('error', function(e) {
-         badGateway();      
+         sender.sendResponse("// 502 - Bad Gateway", "text/javascript",
+           request, response, 502);    
     });
   } else {
-    response.writeHead(404, {"Content-Type": "text/javascript"});
-    response.write("// 404 - Not Found\n" +
-      "// Better luck next time");
-    response.end();
+    sender.sendResponse("// 404 - Not Found\n" +
+      "// Better luck next time", 
+      "text/javascript", request, response, 404);
   }
 }
 
-exports.updater = updateServer;
+exports.updater = updateHandle;
 

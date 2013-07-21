@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Sizzle McTwizzle</title>
+<style type="text/css">
+#content 
+{ 
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#switch 
+{ 
+  width: 100px; 
+  height: 156px; 
+  position: absolute; 
+  top: 60%; 
+  left: 70%; 
+}
+#lights { display: none; }
+#alt_comment { display: none; }
+em { font-size: 12px; }
+a 
+{ 
+  text-decoration: none; 
+  font-weight: bold; 
+  font-size: 16px;
+}
+</style>
+<style type="text/css">
+html { background-color: #000; }
+em { color: #666; }
+a { color: #fff; }
+a:hover { color: #999; }
+</style>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<!-- Does anybody else derive pleasure from handwriting their own html? -->
+</head>
+<body>
+<div id="content">
+<a href="https://userscripts.org/users/sizzle"><img src="https://www.gravatar.com/avatar/8603ded5ba12590f2231b13d5c07c45b?r=PG&s=120&default=identicon" /></a><br /><br />
+<a href="https://userscripts.org/guides/45">Userscript Update Checker</a><br />
+<a href="https://userscripts.org/users/27715/scripts">Greasemonkey Scripts</a><br />
+<a href="https://github.com/sizzlemctwizzle/greasemonkey">Greasemonkey Fork</a><br />
+<a href="https://github.com/sizzlemctwizzle/GM_config">GM_config</a>
+<br />
+<br />
+<em id="comment">It's dark down here.<br />Somebody get the lights.</em>
+<em id="alt_comment">Thanks, that's much better.<br />You might want to sanitize your<br />cursor after clicking that filthy thing.</em>
+<span id="lights">
+html { background-color: #fff; }
+#switch { background-image:url('switch.jpg'); }
+em { color: #999; }
+a { color: #000; }
+a:hover { color: #666; }
+</span>
+</div>
+<!-- Sometimes I like to kick it old school -->
+<div id="switch" onclick="javascript:var lights = document.getElementById('lights'); var style = document.getElementsByTagName('style')[1]; var tmp = style.textContent; style.textContent = lights.textContent; lights.textContent = tmp; var comment = document.getElementById('comment'); var alt = document.getElementById('alt_comment'); if (typeof firstRun == 'undefined') { window.firstRun = false; } else if (!window.firstRun) { alt.innerHTML = 'Why\'d you turn the lights back off?<br />Oh, I see...<br />You want me all alone in<br />the dark with you, you sick fuck!'; window.firstRun = true; } tmp = comment.innerHTML; comment.innerHTML = alt.innerHTML; alt.innerHTML = tmp; void(0);"></div>
+<!-- This page was proudly served up by an old Pentium 4 in my basement -->
+</body>
+</html>
+
