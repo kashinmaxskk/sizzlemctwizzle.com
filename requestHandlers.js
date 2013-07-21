@@ -10,6 +10,11 @@ function updateHandle(response, request) {
   var pathname = parsedUrl.pathname;
   var query = parsedUrl.query;
 
+  function badGateway() {
+    sender.sendResponse("// 502 - Bad Gateway", "text/javascript",
+      request, response, 502);
+  }
+
   if (request.headers['user-agent'].match(/AppleWebKit/i)) {
     sender.sendResponse("// This updater only supports Firefox", 
       "text/javascript", request, response);
@@ -41,11 +46,7 @@ function updateHandle(response, request) {
          sender.sendResponse("// 502 - Bad Gateway", "text/javascript",
            request, response, 502);    
     });
-  } else {
-    sender.sendResponse("// 404 - Not Found\n" +
-      "// Better luck next time", 
-      "text/javascript", request, response, 404);
-  }
+  } else badGateway();
 }
 
 exports.updater = updateHandle;
