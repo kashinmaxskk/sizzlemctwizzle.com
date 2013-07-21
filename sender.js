@@ -20,8 +20,10 @@ function sendResponse(input, contentType, request, response, code, cacheObj) {
   function readCb(err, data) {
     if (err) throw err;
 
-    if (data.length <= 2048) resCb(null, data);
-    else if (encoding == 'deflate') zlib.deflate(data, resCb);
+    if (data.length <= 2048) {
+      encoding = 'none';
+      resCb(null, data);
+    } else if (encoding == 'deflate') zlib.deflate(data, resCb);
     else if (encoding == 'gzip') zlib.gzip(data, resCb);
     else resCb(null, data);
   }
