@@ -20,7 +20,8 @@ function updaterSource(query, meta) {
     version = "typeof GM_info === 'object' ? GM_info.script.version : '" + version + "'";
   }
 
-  return "// The following code (updated 07/24/13) is released under public domain.\n\n" +
+  return "// The following code (updated 07/24/13) is released under public domain.\n" +
+    "// Usage guide: https://userscripts.org/guides/45\n\n" +
     "(function() {\n" +
     "    var id = " + id + ",\n" +
     "      days = " + days + ",\n" +

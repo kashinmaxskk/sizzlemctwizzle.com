@@ -78,9 +78,11 @@ if(isset($_GET['var'])) {
      $var = '_'.$var;
 } else
   $var = '_'.$id;
- 
-echo "// The following code (updated 07/24/13) is released under public domain.\n\n(function() {";
 ?>
+// The following code (updated 07/24/13) is released under public domain.
+// Usage guide: https://userscripts.org/guides/45
+
+(function() {
     var id = <?php echo $id.",\n"; ?>
       days = <?php if(isset($_GET['days']) && $_GET['days'] > 0.04) echo stripslashes($_GET['days']); else echo '2'; ?>,
       name = <?php echo $name; ?>,
