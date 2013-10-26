@@ -33,7 +33,7 @@ exports.mv = function (req, res) {
   for (var i = 0, len = files.length; i < len; ++i) {
     fs.renameSync(src + files[i], dst + files[i]);
   }
-  exports.render(req, res);
+  redirect(req, res);
 }
 
 function login(req, res) {
@@ -41,5 +41,12 @@ function login(req, res) {
   {
     req.session.user = "sizzle";
   }
-  exports.render(req, res);
+  redirect(req, res);
 }
+
+function redirect(req, res) {
+  var dir = req.route.params.path || '';
+  dir = dir ? '/' + dir + '/' : '/';
+  res.redirect(dir);
+}
+
