@@ -1,0 +1,40 @@
+<html>
+<head>
+{{#user}}
+<title>Storage Manager</title>
+<script type="text/javascript">
+function selectAllFiles() {
+  var inputs = document.getElementsByTagName("input");
+  for (var i = 0, len = inputs.length; i < len; ++i) {
+    var input = inputs[i];
+    if (input.type == "checkbox") input.checked = true;
+  }
+}
+</script>
+{{/user}}
+</head>
+<body>
+<form method="post" action="{{dir}}">
+{{#user}}
+{{#files}}
+  <input type="checkbox" name="files[{{num}}]" value="{{name}}" /> 
+  <label for="files[{{num}}]">
+  {{#isDir}}
+    <a href="{{dir}}{{name}}/">{{name}}</a>
+  {{/isDir}}
+  {{^isDir}}
+    {{name}}
+  {{/isDir}}
+  </label><br />
+{{/files}}
+<input type="button" onclick="selectAllFiles();" value="Select All" />
+<input type="submit" value="Watched" />
+{{/user}}
+{{^user}}
+  <label for="user">User</label> <input type="text" name="user" /><br />
+  <label for="pass">Pass</label> <input type="password" name="pass" /><br />
+  <input type="submit" value="Login" />
+{{/user}}
+</form>
+</body>
+</html>
