@@ -5,7 +5,8 @@ This site is built using [express](http://expressjs.com/) and [mustache](http://
 
 First install the libraries:
     
-    npm install -g express mu2
+    npm install -g express
+    npm install -g mu2
     
 To run:
 
