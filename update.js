@@ -4,6 +4,12 @@ var mu = require('mu2');
 mu.root = __dirname + '/templates';
 
 exports.handle = function handle(req, res) {
+  var userAgent = req.headers['user-agent'];
+  if (userAgent && userAgent.match(/AppleWebKit/i)) {
+    sendJS(res, 403, "// This updater only supports Firefox");
+    return;
+  }
+
   var id = req.route.params.id;
   var opts = req.query;
   if (id) opts.id = id;
