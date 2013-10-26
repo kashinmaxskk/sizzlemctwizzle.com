@@ -1,23 +1,24 @@
 var fs = require('fs');
 var mu = require('mu2');
 
-var storeRoot = '/home/medley/Videos';
+var storeRoot = '/home/server/Videos';
 
 exports.render = function (req, res) {
   var dir = req.route.params.path || '';
   dir = dir ? '/' + dir + '/' : '/';
   var path = storeRoot + dir;
-  var user = req.session ? req.session.user : false;
-  fs.readdir(path, function(err, files) {
-    var options = { 'user': user, 'dir': dir, files: [] };
-    for (var i = 0, len = files.length; i < len; ++i) {
-      var file = files[i];
-      if (file == "Watched") continue;
-      var isDir = fs.lstatSync(path + file).isDirectory();
-      options.files.push({name: file, isDir: isDir, num: i});
-    }
-    mu.compileAndRender('index.html', options).pipe(res);
-  });
+  if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
+    fs.readdir(path, function(err, files) {
+      var options = { 'user': req.session.user, 'dir': dir, files: [] };
+      for (var i = 0, len = files.length; i < len; ++i) {
+        var file = files[i];
+        if (file == "Watched") continue;
+        var isDir = fs.lstatSync(path + file).isDirectory();
+        options.files.push({name: file, isDir: isDir, num: i});
+      }
+      mu.compileAndRender('index.html', options).pipe(res);
+    });
+  } else res.send();
 };
 
 exports.mv = function (req, res) {
