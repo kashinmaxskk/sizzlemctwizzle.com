@@ -63,7 +63,7 @@ function sendSource(res, opts, meta) {
     opts.uso = false;
   }
   
-  res.set("Content-Type", "text/javascript");
+  res.set("Content-Type", "text/javascript; charset=utf-8");
   mu.compileAndRender('updater.js', opts).pipe(res);
 }
 
