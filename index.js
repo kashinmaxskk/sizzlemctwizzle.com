@@ -1,4 +1,4 @@
-require('./private');
+require('./store');
 var express = require('express');
 var update = require('./update');
 var app = express();
