@@ -1,4 +1,4 @@
-// The following code (updated 07/24/13) is released under public domain.
+// The following code (updated 10/31/13) is released under public domain.
 // Usage guide: https://userscripts.org/guides/45
 
 
@@ -10,7 +10,7 @@
     function call(response, secure) {
         GM_xmlhttpRequest({
             method: "GET",
-            url: "http{{#secure}}s{{/secure}}://userscripts.org/scripts/source/{{id}}.meta.js",
+            url: "http" + (secure ? "s" : "") + "://userscripts.org/scripts/source/{{id}}.meta.js",
             onload: function(xpr) {compare(xpr, response);},
             onerror: function(xpr) {if (secure) call(response, false);}
         });
